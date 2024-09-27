@@ -1,0 +1,86 @@
+/* 画像を小さく丸く設定 */
+img {
+  width: 100px; /* 画像のサイズを調整 */
+  height: 100px; /* 画像の高さを調整 */
+  border-radius: 50%; /* 画像を丸く */
+  object-fit: cover; /* アスペクト比を保ちながらトリミング */
+  display: block; /* インライン要素をブロックにする */
+  margin: 0 auto; /* 画像を中央に配置 */
+}
+
+/* 全ての文字を中央揃えに設定 */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #FDF6F8; /* 水色に設定 */
+}
+
+/* ヘッダー内のテキストを中央揃え */
+.header {
+  background-color: #A05CB0; /* パープルの背景色 */
+  color: #FFFFFF; /* テキストを白に設定 */
+  padding: 16px;
+  text-align: center; /* ヘッダー内のテキストを中央揃え */
+}
+
+/* h1, h2 タイトルは中央に揃える */
+h1, h2 {
+  text-align: center;
+}
+
+/* 経歴のリストは中央揃えしない */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* リストアイテムのアニメーション */
+ul li {
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeInList 1s ease-out forwards;
+  animation-delay: calc(0.3s * var(--i));
+  text-align: left; /* リストの内容は左揃えに戻す */
+  margin-bottom: 10px; /* アイテムごとのスペースを追加 */
+}
+
+/* タイトルのアニメーション */
+h1 {
+  animation: fadeInDown 1.5s ease-out;
+}
+
+h2 {
+  animation: fadeInUp 1.5s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+      opacity: 0;
+      transform: translateY(-30px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(30px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes fadeInList {
+  from {
+      opacity: 0;
+      transform: translateY(50px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プロフィール</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="profile-container">
+    <h2 id="username"></h2>
+    <img id="icon" src="" alt="アイコン" class="profile-icon">
+  </div>
+
+  <script>
+    // クッキーからユーザー情報を取得
+    const username = getCookie('username');
+    const icon = getCookie('icon');
+
+    // ユーザー情報を表示
+    if (username && icon) {
+      document.getElementById('username').textContent = `Welcome、${username}さん！`;
+      document.getElementById('icon').src = icon;
+    } else {
+      alert('ログイン情報がありません。');
+      window.location.href = 'index.html';  // ログインページにリダイレクト
+    }
+
+    // クッキーから値を取得する関数
+    function getCookie(name) {
+      const nameEQ = name + "=";
+      const ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+  </script>
+
+</body>
+</html>
