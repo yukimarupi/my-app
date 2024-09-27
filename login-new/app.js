@@ -8,11 +8,18 @@ if (document.getElementById('loginForm')) {  //HTMLの'loginForm'を確認
         const storedEmail = getCookie('email');    //クッキーに保存されたemailを取得
         const storedPassword = getCookie('password');    //クッキーに保存されたpasswordを取得
 
-        if (email === storedEmail && password === storedPassword) {   //ユーザーが入力したemailとpasswordがクッキーに保存されている情報と一致しているか確認
-            window.location.href = 'profile.html';  //一致している場合profile.htmファイルに移動
+        //JavaScript ファイルのアラート部分をトースト通知で置き換える
+        if (email === storedEmail && password === storedPassword) {
+            window.location.href = 'profile.html';  // 一致している場合 profile.html へリダイレクト
         } else {
-            alert('Incorrect email or password');  //一致していない場合アラートが表示
+            toastr.error('メールアドレスまたはパスワードが正しくありません。');  // トースト通知でエラーメッセージを表示
         }
+
+        // if (email === storedEmail && password === storedPassword) {   //ユーザーが入力したemailとpasswordがクッキーに保存されている情報と一致しているか確認
+        //     window.location.href = 'profile.html';  //一致している場合profile.htmファイルに移動
+        // } else {
+        //     alert('Incorrect email or password');  //一致していない場合アラートが表示
+        // }
     });
 }
 
@@ -38,7 +45,7 @@ if (document.getElementById('accountForm')) {    //HTMLの'accountForm'を確認
             };
             reader.readAsDataURL(userIcon);     //ユーザーがアップロードした画像データを使えるようにする
         } else {
-            alert('Please upload a JPEG image');     //ユーザーがアップロードしたアイコンがjpegではなかったに場合エラー表示する
+            toastr.error('JPEG画像をアップロードしてください。');     //トースト通知でエラーメッセージを表示
         }
     });
 }
