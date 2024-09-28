@@ -11,21 +11,20 @@
     
 </head>
 <body>
+    
     <div class="container">
-        <h2>新規アカウント作成</h2> <!-- ページタイトル -->
+        <h2>新規アカウント作成</h2>
         <form id="accountForm">
-            <input type="email" id="newEmail" placeholder="メールアドレス" required>  
-
-            <input type="password" id="newPassword" placeholder="パスワード" required> 
-
-            <input type="text" id="username" placeholder="ユーザー名" required> 
-            <!-- 追加部分 -->
+            <input type="email" id="newEmail" placeholder="メールアドレス" required>
+            <input type="password" id="newPassword" placeholder="パスワード" required>
+            <input type="text" id="username" placeholder="ユーザー名" required>
+            <input type="text" id="newUserId" placeholder="ユーザーID" required> <!-- ユーザーID入力フィールドを追加 -->
             <input type="file" id="userIcon" accept="image/*">
-
-        
-            <button type="submit">アカウント作成</button>  
+            <button type="submit">アカウント作成</button>
         </form>
     </div>
+    
+
 
     <script src="app.js"></script>  
 </body>

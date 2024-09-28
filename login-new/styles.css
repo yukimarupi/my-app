@@ -108,15 +108,32 @@ p a:hover {
 
 /*以下追加部分*/
 
-.todo-link {
-    color: #b654c5; /* リンクの色 */
-    font-size: 1.2rem; /* フォントサイズの調整 */
-    font-weight: bold; /* フォントの太さ */
-    margin-top: 20px; /* 上マージン */
-    display: inline-block; /* インラインブロックで表示 */
-    transition: color 0.3s ease; /* 色の変化にアニメーションを設定 */
+/* TODOリストのスタイル調整 */
+.todo-list {
+    width: 100%;
+    max-width: 350px;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.todo-link:hover {
-    color: #a230b6; /* ホバー時の色 */
+.todo-list div {
+    padding: 10px;
+    margin: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.todo-list div:last-child {
+    border-bottom: none;
+}
+
+.todo-list p {
+    margin: 5px 0;
+    color: #333;
+}
+
+button {
+    margin-top: 10px;
 }
