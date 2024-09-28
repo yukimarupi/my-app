@@ -27,7 +27,7 @@ if (document.getElementById('accountForm'))     //HTMLの'accountForm'を確認
         const userIcon = document.getElementById('userIcon').files[0];    //ユーザーが入力したアイコンを取得
         //追加部分
         const formData = new FormData();     //空のフォーム
-        formData.append('image', userIcon);
+        formData.append('image', userIcon);     //サーバにユーザが指定したアイコンデータを送信する
 
 
         try {
@@ -45,7 +45,7 @@ if (document.getElementById('accountForm'))     //HTMLの'accountForm'を確認
                 toastr.success('アカウントが正常に作成されました。');     //アカウントが作成されたことを表示
                 window.location.href = 'login.html';     //アカウント作成後login.htmlページにに移動
             } else {
-                throw new Error('Failed to upload image');
+                throw new Error('Failed to upload image');     //アップロードに失敗した場合
             }
         } catch (error) {
             console.error('Error uploading image:', error);
@@ -79,11 +79,80 @@ function setCookie(name, value, days) {     //クッキーを設定するため�
 function getCookie(name) {     //クッキーの名前を引数として受け取る
     const nameEQ = name + "=";     //クッキーの名前を作る
     const ca = document.cookie.split(';');     //クッキー全体を分割
-    for (let i = 0; i < ca.length; i++) {     //各クッキーをループで確認
-        let c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    for (let i = 0; i < ca.length; i++) {     
+        let c = ca[i];     //空白を取り除く
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);     //先頭にある空白を削除
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);     //クッキー名が一致するか確認
     }     //ループが終えてもクッキーが届かなかった場合nullを返す
 
     return null;
 }
+
+
+
+
+// TODOリストページの処理
+if (window.location.pathname.includes('todo.html')) {
+    document.getElementById('todoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const taskName = document.getElementById('taskName').value;
+        const taskDescription = document.getElementById('taskDescription').value;
+        const taskDeadline = document.getElementById('taskDeadline').value;
+        
+        const newTask = {
+            name: taskName,
+            description: taskDescription,
+            deadline: taskDeadline
+        };
+        
+        addTask(newTask);
+        displayTasks();
+    });
+    
+    function addTask(task) {
+        const tasks = getTasks();
+        tasks.push(task);
+        saveTasks(tasks);
+    }
+
+    function displayTasks() {
+        const tasks = getTasks();
+        const todoList = document.getElementById('todoList');
+        todoList.innerHTML = ''; // Clear the list
+        tasks.forEach((task, index) => {
+            const taskElement = document.createElement('div');
+            taskElement.innerHTML = `
+                <p>タスク名: ${task.name}</p>
+                <p>説明: ${task.description}</p>
+                <p>期限: ${task.deadline}</p>
+                <button onclick="deleteTask(${index})">削除</button>
+            `;
+            todoList.appendChild(taskElement);
+        });
+    }
+
+    function deleteTask(index) {
+        const tasks = getTasks();
+        tasks.splice(index, 1);
+        saveTasks(tasks);
+        displayTasks();
+    }
+    
+    function getTasks() {
+        const tasks = getCookie('tasks');
+        return tasks ? JSON.parse(tasks) : [];
+    }
+    
+    function saveTasks(tasks) {
+        setCookie('tasks', JSON.stringify(tasks), 7);
+    }
+    
+    // 既存の Cookie 操作関数 `setCookie` と `getCookie` はそのまま利用
+}
+
+// ページロード時にタスクを表示
+window.onload = function() {
+    if (window.location.pathname.includes('todo.html')) {
+        displayTasks();
+    }
+};

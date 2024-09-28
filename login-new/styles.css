@@ -104,3 +104,19 @@ p a:hover {
         width: 90%;
     }
 }
+
+
+/*以下追加部分*/
+
+.todo-link {
+    color: #b654c5; /* リンクの色 */
+    font-size: 1.2rem; /* フォントサイズの調整 */
+    font-weight: bold; /* フォントの太さ */
+    margin-top: 20px; /* 上マージン */
+    display: inline-block; /* インラインブロックで表示 */
+    transition: color 0.3s ease; /* 色の変化にアニメーションを設定 */
+}
+
+.todo-link:hover {
+    color: #a230b6; /* ホバー時の色 */
+}
