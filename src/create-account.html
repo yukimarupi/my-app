@@ -1,31 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>新規アカウント作成</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    
-</head>
-<body>
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
+  </head>
+  <body>
     <div class="container">
-        <h2>新規アカウント作成</h2>
-        <form id="accountForm">
-            <input type="email" id="newEmail" placeholder="メールアドレス" required>
-            <input type="password" id="newPassword" placeholder="パスワード" required>
-            <input type="text" id="username" placeholder="ユーザー名" required>
-            <input type="text" id="newUserId" placeholder="ユーザーID" required> <!-- ユーザーID入力フィールドを追加 -->
-            <input type="file" id="userIcon" accept="image/*">
-            <button type="submit">アカウント作成</button>
-        </form>
+      <h2>新規アカウント作成</h2>
+      <form id="accountForm">
+        <input
+          type="email"
+          id="newEmail"
+          placeholder="メールアドレス"
+          required
+        />
+        <input
+          type="password"
+          id="newPassword"
+          placeholder="パスワード"
+          required
+        />
+        <input type="text" id="username" placeholder="ユーザー名" required />
+        <input type="text" id="newUserId" placeholder="ユーザーID" required />
+        <!-- ユーザーID入力フィールドを追加 -->
+        <input type="file" id="userIcon" accept="image/*" />
+        <button type="submit">アカウント作成</button>
+      </form>
     </div>
-    
 
-
-    <script src="app.js"></script>  
-</body>
+    <script src="app.js"></script>
+  </body>
 </html>

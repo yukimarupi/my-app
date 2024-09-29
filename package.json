@@ -4,6 +4,8 @@
   "description": "これは勉強用ディレクトリです",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "format": "prettier --write .",
     "test": "jest"
   },
   "author": "",
@@ -16,8 +18,12 @@
     "@babel/preset-env": "^7.25.4",
     "@testing-library/jest-dom": "^6.5.0",
     "babel-jest": "^29.7.0",
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "jest-environment-jsdom": "^29.7.0",
-    "jest-fetch-mock": "^3.0.3"
+    "jest-fetch-mock": "^3.0.3",
+    "prettier": "^3.3.3"
   },
   "jest": {
     "transform": {
