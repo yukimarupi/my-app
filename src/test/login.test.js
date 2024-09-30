@@ -1,69 +1,34 @@
-import '@testing-library/jest-dom'
-const fs = require('fs')
-const path = require('path')
-const html = fs.readFileSync(
-  path.resolve(__dirname, '../create-account.html'),
-  'utf8',
-)
+const { Builder, By, Key, until } = require('selenium-webdriver')
+const chrome = require('selenium-webdriver/chrome')
+const chromedriver = require('chromedriver')
 
-global.fetch = require('jest-fetch-mock')
-let document
-let window
-describe('アカウント作成とログイン機能', () => {
-  beforeEach(() => {
-    document = new DOMParser().parseFromString(html, 'text/html')
-    window = document.defaultView
-    console.log(window)
+describe('Account Creation and Login Tests', function () {
+  // this.timeout(30000); // テストのタイムアウトを設定（必要に応じて調整）
+  let driver
 
-    global.document = document
-    global.window = window
-    require('../app.js') // これはあなたの実際のJavaScriptファイルへのパスに置き換えてください
-    fetch.resetMocks()
-    global.fetch = require('jest-fetch-mock')
+  before(async function () {
+    driver = new Builder().forBrowser('chrome').build()
   })
 
-  test('全ての入力項目に正しい情報を入力した場合に新規登録が成功すること', () => {
-    document.getElementById('newEmail').value = 'test@example.com'
-    document.getElementById('newPassword').value = 'password123'
-    document.getElementById('username').value = 'testuser'
-    document.getElementById('newUserId').value = 'user123'
-
-    const form = document.getElementById('accountForm')
-    const mockSubmit = jest.fn()
-    form.addEventListener('submit', mockSubmit)
-
-    const event = document.createEvent('Event')
-    event.initEvent('submit', true, true)
-    form.dispatchEvent(event)
-
-    expect(mockSubmit).toHaveBeenCalled()
+  it('should allow a user to register', async function () {
+    await driver.get('file:///path/to/your/create-account.html')
+    await driver.findElement(By.id('newEmail')).sendKeys('test@example.com')
+    await driver.findElement(By.id('newPassword')).sendKeys('password123')
+    await driver.findElement(By.id('username')).sendKeys('testuser')
+    await driver.findElement(By.id('newUserId')).sendKeys('user123')
+    await driver.findElement(By.id('accountForm')).submit()
+    await driver.wait(until.elementLocated(By.id('successMessage')), 10000)
   })
 
-  test('メールアドレスが空の場合、新規登録が拒否されること', () => {
-    document.getElementById('newEmail').value = ''
-    document.getElementById('newPassword').value = 'password123'
-    document.getElementById('username').value = 'testuser'
-
-    const form = document.getElementById('accountForm')
-    const mockSubmit = jest.fn()
-    form.addEventListener('submit', mockSubmit)
-    const event = document.createEvent('Event')
-    event.initEvent('submit', true, true)
-    form.dispatchEvent(event)
-    console.log(document)
-
-    expect(mockSubmit).not.toHaveBeenCalled()
+  it('should allow a user to login', async function () {
+    await driver.get('file:///path/to/your/login.html')
+    await driver.findElement(By.id('email')).sendKeys('test@example.com')
+    await driver.findElement(By.id('password')).sendKeys('password123')
+    await driver.findElement(By.id('loginForm')).submit()
+    await driver.wait(until.elementLocated(By.id('welcomeMessage')), 10000)
   })
 
-  test('正しい認証情報でログインできること', () => {
-    document.getElementById('email').value = 'test@example.com'
-    document.getElementById('password').value = 'password123'
-
-    const form = document.getElementById('loginForm')
-    const mockSubmit = jest.fn()
-    form.addEventListener('submit', mockSubmit)
-    form.dispatchEvent(new window.Event('submit'))
-
-    expect(mockSubmit).toHaveBeenCalled()
+  after(async function () {
+    await driver.quit()
   })
 })

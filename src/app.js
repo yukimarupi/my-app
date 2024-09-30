@@ -101,25 +101,24 @@ if (window.location.pathname.includes('profile.html')) {
 
 // Cookieを設定する関数
 function setCookie(name, value, days, userId) {
-    const date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    const expires = "expires=" + date.toUTCString();
-    document.cookie = userId + "_" + name + "=" + value + ";" + expires + ";path=/";
+  const date = new Date()
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+  const expires = 'expires=' + date.toUTCString()
+  document.cookie =
+    userId + '_' + name + '=' + value + ';' + expires + ';path=/'
 }
-
 
 // Cookieを取得する関数
 function getCookie(name, userId) {
-  const nameEQ = userId + "_" + name + "=";
-  const ca = document.cookie.split(';');
+  const nameEQ = userId + '_' + name + '='
+  const ca = document.cookie.split(';')
   for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    let c = ca[i]
+    while (c.charAt(0) === ' ') c = c.substring(1)
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length)
   }
-  return null;
+  return null
 }
-
 
 // TODOリストページの処理
 if (window.location.pathname.includes('todo.html')) {
@@ -148,7 +147,7 @@ if (window.location.pathname.includes('todo.html')) {
   })
 }
 
- function addTask(task) {
+function addTask(task) {
   console.log(`addTask()`)
   const tasks = getTasks() //保存されているタスクのリストを返す
   console.log(`tasks`, tasks)
@@ -199,7 +198,7 @@ function getTasks() {
   return tasks ? JSON.parse(tasks) : [] //タスクデータが存在しなければ[]を返す
 }
 
- function saveTasks(tasks) {
+function saveTasks(tasks) {
   const userId = getCookie('userId') //ユーザーIDの取得
   console.log('userId', userId)
   setCookie('tasks', JSON.stringify(tasks), 7, userId) //タスクの保存
