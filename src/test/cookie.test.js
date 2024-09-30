@@ -18,15 +18,15 @@ describe('Cookieの設定と取得', () => {
     cookies = {} // Cookieを格納するオブジェクトを初期化
     if (typeof document !== 'undefined' && !document.hasOwnProperty('cookie')) {
       Object.defineProperty(document, 'cookie', {
-        configurable: true, // これによりプロパティの再定義が可能になる
-        enumerable: true,
+        configurable: true,
         get: () =>
           Object.entries(cookies)
-            .map(([key, value]) => `${key}=${value}`)
-            .join('; '), // すべてのCookieを一つの文字列に連結
+            .map(([k, v]) => `${k}=${v}`)
+            .join('; '),
         set: (value) => {
-          const [cookieName, cookieValue] = value.split('=')
-          cookies[cookieName.trim()] = cookieValue.split(';')[0] // ";"で区切られた最初の部分が値
+          const parts = value.split(';')[0] // 最初の部分だけを取り出す
+          const [key, val] = parts.split('=') // キーと値に分割
+          cookies[key.trim()] = val.trim() // キーと値をオブジェクトに設定
         },
       })
     }

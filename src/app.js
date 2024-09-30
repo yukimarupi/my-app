@@ -100,33 +100,26 @@ if (window.location.pathname.includes('profile.html')) {
 }
 
 // Cookieを設定する関数
-export function setCookie(name, value, days, userId) {
-  const date = new Date()
-  console.log('date', date)
-  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
-  const expires = 'expires=' + date.toUTCString()
-  document.cookie =
-    userId + '_' + name + '=' + value + ';' + expires + ';path=/'
+function setCookie(name, value, days, userId) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = userId + "_" + name + "=" + value + ";" + expires + ";path=/";
 }
+
 
 // Cookieを取得する関数
-
 function getCookie(name, userId) {
-  //クッキーから名前とユーザーIDを取得
-  console.log('getCookie')
-  const nameEQ = userId + '_' + name + '=' //nameEQに文字列を入れる
-  console.log('nameEQ', nameEQ)
-
-  const ca = document.cookie.split(';') //データをクッキーに入れる
-  console.log('ca', ca)
-
+  const nameEQ = userId + "_" + name + "=";
+  const ca = document.cookie.split(';');
   for (let i = 0; i < ca.length; i++) {
-    let c = ca[i]
-    while (c.charAt(0) === ' ') c = c.substring(1)
-    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length)
+      let c = ca[i];
+      while (c.charAt(0) === ' ') c = c.substring(1);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
   }
-  return null
+  return null;
 }
+
 
 // TODOリストページの処理
 if (window.location.pathname.includes('todo.html')) {
@@ -153,64 +146,63 @@ if (window.location.pathname.includes('todo.html')) {
     addTask(newTask) //ユーザーがクリックすると新しいタスクを追加できる
     displayTasks() //更新されたタスクリストをユーザーに表示
   })
+}
 
-  function addTask(task) {
-    console.log(`addTask()`)
-    const tasks = getTasks() //保存されているタスクのリストを返す
-    console.log(`tasks`, tasks)
-    tasks.push(task) //新しいタスクを追加
-    console.log(`tasks`, tasks)
-    saveTasks(tasks) //変更されたタスクを保存
-  }
+ function addTask(task) {
+  console.log(`addTask()`)
+  const tasks = getTasks() //保存されているタスクのリストを返す
+  console.log(`tasks`, tasks)
+  tasks.push(task) //新しいタスクを追加
+  console.log(`tasks`, tasks)
+  saveTasks(tasks) //変更されたタスクを保存
+}
 
-  function displayTasks() {
-    console.log(`displayTasks`)
-    const tasks = getTasks() //保存されている全てのタスクを取得
-    console.log(`tasks`, tasks)
-    const todoList = document.getElementById('todoList') //HTMLの'todoList'を取得
-    console.log(`todoList`, todoList)
-    todoList.innerHTML = '' // 'todoList'を空に設定して新たにタスクを表示する準備
-    tasks.forEach((task, index) => {
-      //タスクに対して処理を行うループ
-      console.log(`task`, task)
-      console.log(`index`, index)
-      const taskElement = document.createElement('div') //各タスクの情報を囲むコンテナ
-      console.log(`taskElement`, taskElement)
-      taskElement.innerHTML = `     
+function displayTasks() {
+  console.log(`displayTasks`)
+  const tasks = getTasks() //保存されている全てのタスクを取得
+  console.log(`tasks`, tasks)
+  const todoList = document.getElementById('todoList') //HTMLの'todoList'を取得
+  console.log(`todoList`, todoList)
+  todoList.innerHTML = '' // 'todoList'を空に設定して新たにタスクを表示する準備
+  tasks.forEach((task, index) => {
+    //タスクに対して処理を行うループ
+    console.log(`task`, task)
+    console.log(`index`, index)
+    const taskElement = document.createElement('div') //各タスクの情報を囲むコンテナ
+    console.log(`taskElement`, taskElement)
+    taskElement.innerHTML = `     
                 <p>タスク名: ${task.name}</p>
                 <p>説明: ${task.description}</p>
                 <p>期限: ${task.deadline}</p>
                 <button onclick="deleteTask(${index})">削除</button>        
             ` //タスクの詳細（名前、説明、期限）と削除ボタンを含むHTMLを設定
-      console.log(`taskElement`, taskElement)
-      todoList.appendChild(taskElement) //画面上にタスクが表示される
-      console.log(`todoList`, todoList)
-    })
-  }
+    console.log(`taskElement`, taskElement)
+    todoList.appendChild(taskElement) //画面上にタスクが表示される
+    console.log(`todoList`, todoList)
+  })
+}
+function deleteTask(index) {
+  console.log(`deleteTask()`)
+  const tasks = getTasks() //保存されているタスクを取得
+  console.log(`tasks`, tasks)
+  tasks.splice(index, 1) //１つのタスクを削除
+  console.log(`tasks`, tasks)
+  saveTasks(tasks) //更新されたタスクリストを再び保存
+  displayTasks() //
+}
 
-  function deleteTask(index) {
-    console.log(`deleteTask()`)
-    const tasks = getTasks() //保存されているタスクを取得
-    console.log(`tasks`, tasks)
-    tasks.splice(index, 1) //１つのタスクを削除
-    console.log(`tasks`, tasks)
-    saveTasks(tasks) //更新されたタスクリストを再び保存
-    displayTasks() //
-  }
+function getTasks() {
+  const userId = getCookie('userId') //ログインしているユーザーのIDをクッキーから取得
+  console.log('userId', userId)
+  const tasks = getCookie('tasks', userId) //ユーザーIDに紐づけられたクッキーを取得
+  console.log('tasks', tasks)
+  return tasks ? JSON.parse(tasks) : [] //タスクデータが存在しなければ[]を返す
+}
 
-  function getTasks() {
-    const userId = getCookie('userId') //ログインしているユーザーのIDをクッキーから取得
-    console.log('userId', userId)
-    const tasks = getCookie('tasks', userId) //ユーザーIDに紐づけられたクッキーを取得
-    console.log('tasks', tasks)
-    return tasks ? JSON.parse(tasks) : [] //タスクデータが存在しなければ[]を返す
-  }
-
-  function saveTasks(tasks) {
-    const userId = getCookie('userId') //ユーザーIDの取得
-    console.log('userId', userId)
-    setCookie('tasks', JSON.stringify(tasks), 7, userId) //タスクの保存
-  }
+ function saveTasks(tasks) {
+  const userId = getCookie('userId') //ユーザーIDの取得
+  console.log('userId', userId)
+  setCookie('tasks', JSON.stringify(tasks), 7, userId) //タスクの保存
 }
 
 // 既存の Cookie 操作関数 `setCookie` と `getCookie` はそのまま利用
